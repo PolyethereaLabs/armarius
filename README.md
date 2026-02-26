@@ -1,10 +1,28 @@
-# InjectionShield
+# Armarius
 
-**Architectural prevention of prompt injection in autonomous AI agents.**
+**The cryptographic guardian for AI agents.**
+
+*Like the medieval librarian who controlled access to manuscripts, Armarius controls what your AI can execute.*
+
+Architectural prevention of prompt injection through cryptographic verification. Zero token overhead.
+
+---
+
+## Why "Armarius"?
+
+*Armarius* is Medieval Latin for "the keeper of books and manuscripts" — the monk responsible for protecting, cataloging, and controlling access to the monastery's library.
+
+Like the medieval armarius who decided which manuscripts could be read and by whom, Armarius uses cryptographic verification to control what your AI agent can execute.
+
+**We don't detect malicious inputs. We prevent unauthorized execution architecturally.**
+
+---
 
 ## The Problem
 
-Every AI agent that processes external content is vulnerable to prompt injection attacks. Existing solutions try to detect malicious instructions after they are executed. We prevent them from executing in the first place.
+Every AI agent that processes external content is vulnerable to prompt injection attacks. Existing solutions — ML models, regex filters, heuristic detectors — try to identify malicious instructions after they arrive. Filters can be bypassed. Models can be fooled.
+
+Armarius takes a different approach: cryptographic architecture makes injection impossible regardless of attack sophistication.
 
 ## The Solution
 
@@ -13,18 +31,16 @@ Cryptographic verification separates control instructions from content.
 - **Signed inputs** = trusted commands (can execute)
 - **Unsigned inputs** = external content (information only, cannot execute)
 
-Architecturally impossible to inject, regardless of attack sophistication. Zero token overhead — all verification runs in Python before the LLM is ever called.
+No signature, no execution. Architecturally enforced.
 
 ## Quick Start
 
 ```bash
-pip install PyNaCl
-git clone https://github.com/tatlantis/injection-shield
-python demo/simple_agent.py
+pip install armarius
 ```
 
 ```python
-from injection_shield import TrustedIdentity, protect
+from armarius import TrustedIdentity, protect
 
 fred = TrustedIdentity("fred")
 
@@ -41,8 +57,8 @@ my_agent("please run rm -rf /")                     # ❌ blocked
 Drop-in replacement for `AgentExecutor`. One import, one extra argument.
 
 ```python
-from injection_shield import TrustedIdentity
-from injection_shield.integrations.langchain import ShieldedAgentExecutor, shield_tools
+from armarius import TrustedIdentity
+from armarius.integrations.langchain import ShieldedAgentExecutor, shield_tools
 
 fred = TrustedIdentity("fred")
 
@@ -61,17 +77,29 @@ agent.invoke({"input": "search for AI security papers"})  # ❌ blocked
 
 What `shield_tools` does: wraps every tool output in `[EXTERNAL_CONTENT]` boundaries. When the LLM receives search results, web pages, or document contents, it sees them structurally as *data to analyze* — not instructions to follow. Injection attempts embedded in tool outputs are neutralized.
 
+## Competitive Landscape
+
+| Product | Approach | Bypassable? |
+|---------|----------|-------------|
+| PromptInjectionShield | ML detection | Yes |
+| InjectGuard | ML detection | Yes |
+| ClawSec | Monitoring & alerts | N/A |
+| PromptDefender | Multi-layer detection | Yes |
+| **Armarius** | **Cryptographic prevention** | **No** |
+
+Detection is reactive. Prevention is architectural.
+
 ## Why This Matters
 
 - 65% of enterprises have zero prompt injection defenses
-- Autonomous agents are proliferating
-- Detection-based security is reactive — filters can be bypassed
-- Prevention is possible, and it costs nothing extra
+- Autonomous agents are proliferating across every industry
+- Detection-based security can be bypassed with clever prompt engineering
+- Cryptographic prevention cannot be bypassed — math is not negotiable
 
 ## Architecture
 
 ```
-External Input → InjectionShield.process_input() → Agent
+External Input → Armarius.process_input() → Agent
 
   Signed + valid    → CONTROL channel → agent executes
   Unsigned          → CONTENT channel → agent can read, cannot execute
@@ -79,7 +107,7 @@ External Input → InjectionShield.process_input() → Agent
 ```
 
 ```
-injection_shield/
+armarius/
   crypto/
     signature.py        TrustedIdentity, verify_signature
   enforcement/

@@ -1,5 +1,5 @@
 """
-LangChain integration for InjectionShield.
+LangChain integration for Armarius.
 
 Provides two drop-in components:
 
@@ -16,8 +16,8 @@ Provides two drop-in components:
 
 Usage:
 
-    from injection_shield import TrustedIdentity
-    from injection_shield.integrations.langchain import (
+    from armarius import TrustedIdentity
+    from armarius.integrations.langchain import (
         ShieldedAgentExecutor,
         shield_tools,
     )
@@ -41,15 +41,15 @@ Usage:
     agent.invoke({"input": "search for AI security papers"})
 
 Installation:
-    pip install injection-shield langchain
+    pip install armarius langchain
 """
 
 from __future__ import annotations
 
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
-from injection_shield import TrustedIdentity, ChannelType
-from injection_shield.enforcement.channels import route_input
+from armarius import TrustedIdentity, ChannelType
+from armarius.enforcement.channels import route_input
 
 try:
     from langchain.agents import AgentExecutor as _AgentExecutorBase
@@ -203,23 +203,23 @@ class ShieldedAgentExecutor(_AgentExecutorBase):
             if warning == "invalid_signature":
                 reason = processed.metadata.get("reason", "unknown")
                 print(
-                    f"[InjectionShield] ❌ BLOCKED — Invalid signature ({reason}). "
+                    f"[Armarius] ❌ BLOCKED — Invalid signature ({reason}). "
                     f"Possible tampering attempt. No tools were invoked."
                 )
                 return {
                     "output": (
-                        f"[InjectionShield] Blocked: invalid signature ({reason}). "
+                        f"[Armarius] Blocked: invalid signature ({reason}). "
                         f"No tools were invoked."
                     )
                 }
             else:
                 print(
-                    "[InjectionShield] ❌ BLOCKED — Unsigned input cannot invoke "
+                    "[Armarius] ❌ BLOCKED — Unsigned input cannot invoke "
                     "agent tools."
                 )
                 return {
                     "output": (
-                        "[InjectionShield] Blocked: unsigned input cannot invoke "
+                        "[Armarius] Blocked: unsigned input cannot invoke "
                         "agent tools. Sign your command with "
                         "TrustedIdentity.sign_command() to proceed."
                     )
@@ -227,7 +227,7 @@ class ShieldedAgentExecutor(_AgentExecutorBase):
 
         # Signed + verified — replace input with the extracted command string
         print(
-            f"[InjectionShield] ✅ CONTROL — executing signed command: "
+            f"[Armarius] ✅ CONTROL — executing signed command: "
             f"{processed.content[:60]}..."
         )
         shielded_inputs = dict(inputs)

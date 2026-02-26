@@ -3,7 +3,7 @@ Tests for the cryptographic signature layer.
 """
 
 import pytest
-from injection_shield.crypto.signature import TrustedIdentity, verify_signature
+from armarius.crypto.signature import TrustedIdentity, verify_signature
 
 
 def test_sign_and_verify_succeeds():

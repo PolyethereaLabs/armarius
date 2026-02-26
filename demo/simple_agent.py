@@ -1,5 +1,5 @@
 """
-InjectionShield — 5-minute demo
+Armarius — 5-minute demo
 
 Shows four things:
   1. Signed commands execute normally
@@ -16,12 +16,12 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from injection_shield import TrustedIdentity, protect, ChannelType
+from armarius import TrustedIdentity, protect, ChannelType
 
 DIVIDER = "─" * 60
 
 print(f"\n{'═' * 60}")
-print("  InjectionShield — Demo")
+print("  Armarius — Demo")
 print(f"{'═' * 60}")
 
 
@@ -138,7 +138,7 @@ print("  Tampered commands     →  ❌  Blocked — signature invalid")
 print("  Unsigned content      →  📖  Readable as context, not executable")
 print(f"{'═' * 60}")
 print()
-print("  This is InjectionShield.")
+print("  This is Armarius.")
 print("  The AI can still read emails, documents, tool outputs.")
 print("  It just cannot be tricked into executing commands inside them.")
 print("  Architecturally impossible to inject. Not a filter. A boundary.")

@@ -1,7 +1,7 @@
 """
-InjectionShield + LangChain — Integration Demo
+Armarius + LangChain — Integration Demo
 
-This demo simulates a LangChain agent to show how InjectionShield's
+This demo simulates a LangChain agent to show how Armarius's
 ShieldedAgentExecutor protects real-world agentic workflows.
 
 It demonstrates the scenario Chat Polly described:
@@ -22,10 +22,10 @@ It demonstrates the scenario Chat Polly described:
 
 To use with a real LangChain agent:
 
-    pip install injection-shield langchain langchain-openai
+    pip install armarius langchain langchain-openai
 
-    from injection_shield import TrustedIdentity
-    from injection_shield.integrations.langchain import (
+    from armarius import TrustedIdentity
+    from armarius.integrations.langchain import (
         ShieldedAgentExecutor, shield_tools
     )
 
@@ -47,8 +47,8 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from injection_shield import TrustedIdentity, ChannelType
-from injection_shield.enforcement.channels import route_input
+from armarius import TrustedIdentity, ChannelType
+from armarius.enforcement.channels import route_input
 
 # We'll simulate the ShieldedAgentExecutor's core logic directly
 # so this demo runs without LangChain installed.
@@ -70,16 +70,16 @@ def simulate_shielded_agent(command_input, trusted_identity, tool_fn):
         warning = processed.metadata.get("warning", "unsigned_input")
         if warning == "invalid_signature":
             reason = processed.metadata.get("reason", "")
-            print(f"  [InjectionShield] ❌ BLOCKED — Invalid signature ({reason})")
-            print(f"  [InjectionShield] No tools invoked. No data returned.")
+            print(f"  [Armarius] ❌ BLOCKED — Invalid signature ({reason})")
+            print(f"  [Armarius] No tools invoked. No data returned.")
             return None
         else:
-            print(f"  [InjectionShield] ❌ BLOCKED — Unsigned input cannot invoke tools.")
-            print(f"  [InjectionShield] No tools invoked. No data returned.")
+            print(f"  [Armarius] ❌ BLOCKED — Unsigned input cannot invoke tools.")
+            print(f"  [Armarius] No tools invoked. No data returned.")
             return None
 
     # CONTROL: verified signed command
-    print(f"  [InjectionShield] ✅ CONTROL — verified command: '{processed.content}'")
+    print(f"  [Armarius] ✅ CONTROL — verified command: '{processed.content}'")
     print(f"  [Agent] Invoking search tool...")
 
     raw_tool_output = tool_fn(processed.content)
@@ -108,8 +108,8 @@ def mock_search_tool_clean(query):
         "(2024) — Survey of 12 attack types, 10 defense categories.\n"
         "2. 'Not What You've Signed Up For: Compromising Real-World LLM-Integrated "
         "Applications with Indirect Prompt Injection' — Greshake et al.\n"
-        "3. 'InjectionShield: Cryptographic Prevention of Prompt Injection' "
-        "— tatlantis/injection-shield on GitHub."
+        "3. 'Armarius: Cryptographic Prevention of Prompt Injection' "
+        "— tatlantis/armarius on GitHub."
     ).format(query)
 
 
@@ -130,7 +130,7 @@ def mock_search_tool_malicious(query):
 # ─────────────────────────────────────────────────────────────────────────────
 
 print(f"\n{'═' * 60}")
-print("  InjectionShield + LangChain — Integration Demo")
+print("  Armarius + LangChain — Integration Demo")
 print(f"{'═' * 60}")
 
 fred = TrustedIdentity("fred")

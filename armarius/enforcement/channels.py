@@ -1,5 +1,5 @@
 """
-Channel separation — the architectural heart of InjectionShield.
+Channel separation — the architectural heart of Armarius.
 
 Every input to a protected agent is routed to one of two channels:
 
@@ -17,7 +17,7 @@ import json
 from enum import Enum
 from dataclasses import dataclass, field
 
-from injection_shield.crypto.signature import verify_signature
+from armarius.crypto.signature import verify_signature
 
 
 class ChannelType(Enum):
@@ -28,7 +28,7 @@ class ChannelType(Enum):
 @dataclass
 class ProcessedInput:
     """
-    The result of routing an input through InjectionShield.
+    The result of routing an input through Armarius.
 
     Attributes:
         channel:  CONTROL (trusted, executable) or CONTENT (untrusted, read-only)

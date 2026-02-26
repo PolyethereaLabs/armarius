@@ -7,7 +7,7 @@ Every path an attacker might take should be covered here.
 
 import pytest
 import nacl.encoding
-from injection_shield.crypto.signature import TrustedIdentity, verify_signature
+from armarius.crypto.signature import TrustedIdentity, verify_signature
 
 
 def test_tampered_command_fails():

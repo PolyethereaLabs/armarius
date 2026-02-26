@@ -7,7 +7,7 @@ can inspect and act on itself.
 
 Usage:
 
-    from injection_shield import TrustedIdentity, process_input, ChannelType
+    from armarius import TrustedIdentity, process_input, ChannelType
 
     fred = TrustedIdentity("fred")
 
@@ -21,9 +21,9 @@ Usage:
 """
 
 import logging
-from injection_shield.enforcement.channels import route_input, ChannelType, ProcessedInput
+from armarius.enforcement.channels import route_input, ChannelType, ProcessedInput
 
-logger = logging.getLogger("injection_shield")
+logger = logging.getLogger("armarius")
 
 
 def process_input(input_data, verify_key=None) -> ProcessedInput:
@@ -42,13 +42,13 @@ def process_input(input_data, verify_key=None) -> ProcessedInput:
 
     if result.channel == ChannelType.CONTROL:
         logger.info(
-            "[InjectionShield] CONTROL — executing: %s",
+            "[Armarius] CONTROL — executing: %s",
             result.content[:80]
         )
     else:
         warning = result.metadata.get('warning', 'unknown')
         logger.warning(
-            "[InjectionShield] CONTENT — blocked execution (%s): %s",
+            "[Armarius] CONTENT — blocked execution (%s): %s",
             warning,
             result.content[:80]
         )

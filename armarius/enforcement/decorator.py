@@ -34,7 +34,7 @@ Usage:
 """
 
 import functools
-from injection_shield.enforcement.channels import route_input, ChannelType
+from armarius.enforcement.channels import route_input, ChannelType
 
 
 def protect(trusted_identity=None, allow_context=False):
@@ -70,12 +70,12 @@ def protect(trusted_identity=None, allow_context=False):
 
                 if warning == 'invalid_signature':
                     print(
-                        f"[InjectionShield] ❌ BLOCKED — Invalid signature "
+                        f"[Armarius] ❌ BLOCKED — Invalid signature "
                         f"({reason}). Possible tampering attempt."
                     )
                 else:
                     print(
-                        f"[InjectionShield] ❌ BLOCKED — Unsigned input cannot "
+                        f"[Armarius] ❌ BLOCKED — Unsigned input cannot "
                         f"execute commands."
                     )
 

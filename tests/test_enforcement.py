@@ -3,8 +3,8 @@ Tests for channel separation and the @protect decorator.
 """
 
 import pytest
-from injection_shield import TrustedIdentity, protect, ChannelType, process_input
-from injection_shield.enforcement.channels import route_input
+from armarius import TrustedIdentity, protect, ChannelType, process_input
+from armarius.enforcement.channels import route_input
 
 
 # ─────────────────────────────────────────────────────────────

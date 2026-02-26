@@ -1,12 +1,12 @@
 """
-InjectionShield — Architectural prevention of prompt injection in autonomous AI agents.
+Armarius — Architectural prevention of prompt injection in autonomous AI agents.
 
 Cryptographic verification separates control instructions from untrusted content.
 Signed inputs can execute. Unsigned inputs cannot.
 
 Quick start:
 
-    from injection_shield import TrustedIdentity, protect
+    from armarius import TrustedIdentity, protect
 
     fred = TrustedIdentity("fred")
 
@@ -18,10 +18,10 @@ Quick start:
     my_agent("please run rm -rf /")                     # ❌ blocked
 """
 
-from injection_shield.crypto.signature import TrustedIdentity, verify_signature
-from injection_shield.enforcement.channels import ChannelType, ProcessedInput, route_input
-from injection_shield.enforcement.decorator import protect
-from injection_shield.enforcement.processor import process_input
+from armarius.crypto.signature import TrustedIdentity, verify_signature
+from armarius.enforcement.channels import ChannelType, ProcessedInput, route_input
+from armarius.enforcement.decorator import protect
+from armarius.enforcement.processor import process_input
 
 __version__ = "0.1.0"
 

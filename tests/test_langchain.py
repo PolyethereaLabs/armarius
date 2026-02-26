@@ -8,8 +8,8 @@ verification, channel routing, input/output handling — not LangChain itself.
 
 import pytest
 from unittest.mock import MagicMock, patch, PropertyMock
-from injection_shield import TrustedIdentity, ChannelType
-from injection_shield.enforcement.channels import route_input
+from armarius import TrustedIdentity, ChannelType
+from armarius.enforcement.channels import route_input
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -66,14 +66,14 @@ class ShieldedAgentExecutorForTest(MockAgentExecutor):
                 reason = processed.metadata.get("reason", "unknown")
                 return {
                     "output": (
-                        f"[InjectionShield] Blocked: invalid signature ({reason}). "
+                        f"[Armarius] Blocked: invalid signature ({reason}). "
                         f"No tools were invoked."
                     )
                 }
             else:
                 return {
                     "output": (
-                        "[InjectionShield] Blocked: unsigned input cannot invoke "
+                        "[Armarius] Blocked: unsigned input cannot invoke "
                         "agent tools."
                     )
                 }
